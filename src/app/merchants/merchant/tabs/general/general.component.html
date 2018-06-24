@@ -1,0 +1,57 @@
+<form [formGroup]="generalForm" (ngSubmit)="onSubmit()">
+    <!-- <div class="alert alert-success" role="alert">
+        Selected business: {{values | json}}
+    </div> -->
+    <div *ngIf="(!generalForm.valid) || (errors && errors.length > 0 && !submitted)" class="alert alert-danger" role="alert">
+        <div *ngFor="let error of errors">{{ error }}</div>
+    </div>
+    <div *ngIf="messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+        <div *ngFor="let message of messages">{{ message }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="input-firstName">Business Service : (*)</label>
+            </div>
+            <div class="category1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ngx-treeview [config]="config" [items]="items" (selectedChange)="onSelectedChange($event)">
+                        </ngx-treeview>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="input-firstName">Company Info :</label>
+            </div>
+            <div class="category1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" name="_id" formControlName="_id">
+                        <input type="hidden" name="userId" formControlName="userId">
+                        <div class="form-group">
+                            <label for="name">Company Name</label>
+                            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Outlet Name" [class.form-control-danger]="generalForm.get('name').invalid && generalForm.get('name').touched">
+                            <span *ngIf="!generalForm.get('name').valid && generalForm.get('name').touched" class="form-text error">                           
+                                <span *ngIf="generalForm.get('name').errors['required']">This field is required!</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="input-firstName">Vendor Website</label>
+                            <input name="url" type="text" id="url" class="form-control" formControlName="url" placeholder="URL">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-hero-success">Save and Continue</button>
+        </div>
+    </div>
+</form>

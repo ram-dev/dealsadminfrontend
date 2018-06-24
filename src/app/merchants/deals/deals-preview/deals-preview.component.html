@@ -1,0 +1,128 @@
+<div class="dealViewWrapper">
+    <div class="row" *ngIf="dealSource else emptyList">
+        <div class="col-md-12 col-lg-6">
+            <nb-card size="xlarge">
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ngb-carousel>
+                                <ng-template ngbSlide *ngFor="let slider of sliders">
+                                    <img style="height: 576px;" class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
+                                    <div class="DealTitle dealdetails">
+                                        <div class="heading">
+                                            <h3 class="imgHead">{{dealSource.name}}
+                                                <span style="font-size:14px;">
+                                                ,<span id="repLocation_185">
+                                                   {{dealSource.outletList.contacts.city}}
+                                                </span>
+                                                </span>
+                                            </h3>
+                                        </div>
+                                        <h6 title="{{dealSource.offer}}">{{dealSource.offer}}</h6>
+                                    </div>
+                                    <div class="share-deals">
+                                        <span>Share the Deal</span>
+                                        <br>
+                                        <share-buttons [theme]="'circles'" [include]="['facebook','twitter','google']" [show]="3" [size]="-3" [url]="'http://twitter.com'" [title]="'test1'" [description]="'desc'" [image]="'345'" [tags]="'fsdfds'"></share-buttons>
+                                    </div>
+                                </ng-template>
+                            </ngb-carousel>
+                        </div>
+                        <div class="d-flex flex-row">
+                          <div class="p-2 ">Coupon Valid Till</div>
+                          <div class="p-2 text-primary">{{dealSource.offerValidTo | date: 'dd/MM/yyyy'}}</div>                         
+                        </div>
+                        <div class="d-flex flex-row">
+                          <div class="p-2">Offer</div>
+                          <div class="p-2 text-primary">{{dealSource.offer}}</div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <nb-card size="xlarge">
+                <nb-tabset>
+                    <nb-tab tabTitle="COUPON">
+                        <div>
+                            <h4>Download This Coupon</h4>
+                            <p>To download this Coupon, enter your Mobile No.</p>
+                            <div class="input-group mail-btn-group" style="height: 35px;">
+                                <span class="input-group-btn">
+                                <button class="btn btn-success btn-icon" style="font-size: 1rem; padding: 5px;">
+                                  +91
+                                </button>
+                              </span>
+                                <input type="text" disabled class="form-control" placeholder="Please enter your mobile no">
+                                <span class="input-group-btn">
+                                <button class="btn btn-success" style="font-size: 10px; padding: 5px;">
+                                  SMS me this FREE Coupon
+                                </button>
+                              </span>
+                            </div>
+                            <nb-checkbox [value]="true" disabled>I agree to </nb-checkbox><a target="_blank" href="">terms of use</a>
+                            <p class="term"> <i class="fa fa-lock" aria-hidden="true"></i> <span style="margin-top:8px; font-size:11px;">Your Mobile No. is 100% safe with us.</span></p>
+                        </div>
+                        <div>
+                            <h4>Address</h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p title="">{{dealSource.outletList.contacts.address}} {{dealSource.outletList.contacts.city}} - {{dealSource.outletList.contacts.zip}} <br/> {{dealSource.outletList.contacts.state}} {{dealSource.outletList.contacts.country}}</p>
+                                </div>                               
+                                <div class="col-md-12">
+                                    <agm-map [latitude]="dealSource.lat" [longitude]="dealSource.lng">
+                                      <agm-marker [latitude]="dealSource.lat" [longitude]="dealSource.lng"></agm-marker>
+                                    </agm-map>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </nb-tab>
+                    <nb-tab tabTitle="INFO">
+                        <table class="table table-striped table-dark">
+                            <!-- cellspacing='0' is important, must stay -->
+                            <tbody>
+                                <tr>
+                                    <td valign="top">Deal</td>
+                                    <td>{{dealSource.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">Offer</td>
+                                    <td>{{dealSource.offer}}<br/>{{dealSource.offerDeatils}}</td>
+                                </tr>
+                                <!--<tr><td>Location</td>
+                                    <td>Saket </td></tr>-->
+                                <tr>
+                                    <td valign="top">Address</td>
+                                    <td>
+                                        <p *ngFor="let outlet of dealSource.outletIds" title="">{{outlet.contacts.address}} {{outlet.contacts.city}} - {{outlet.contacts.zip}} {{outlet.contacts.state}} {{outlet.contacts.country}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">Terms &amp; Conditions </td>
+                                    <td>
+                                        {{dealSource.terms}}
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td>Coupon Valid from</td>
+                                    <td>{{dealSource.offerValidFrom | date: 'dd/MM/yyyy'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Coupon Valid Till</td>
+                                    <td>{{dealSource.offerValidTo | date: 'dd/MM/yyyy'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </nb-tab>
+                </nb-tabset>
+            </nb-card>
+        </div>
+    </div>
+    
+</div>
+
+<ng-template #emptyList>
+   <div >
+        No result
+    </div>
+</ng-template>

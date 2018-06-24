@@ -1,0 +1,41 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+
+@include nb-install-component() {
+  nb-tabset {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nb-tab {
+    padding: nb-theme(padding);
+  }
+
+  /deep/ ngx-tab1, /deep/ ngx-tab2, /deep/ ngx-merchant-amenities, /deep/ ngx-merchant-general, /deep/ ngx-merchant-images, /deep/ ngx-merchant-outlets {
+    display: block;
+    padding: nb-theme(padding);
+  }
+
+  /deep/ ngx-merchant-general .category, /deep/ ngx-merchant-amenities .category{
+    border:1px solid #ebeef2;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /deep/ ngx-merchant-general ul, /deep/ ngx-merchant-amenities ul{
+    border-bottom:0;
+  }
+
+  /deep/ ngx-merchant-general ul li, /deep/ ngx-merchant-amenities ul li{
+    list-style:none;
+  }
+
+  @include media-breakpoint-down(xs) {
+    nb-tabset /deep/ul {
+      font-size: 1rem;
+      padding: 0 0.25rem;
+    }
+  }
+}

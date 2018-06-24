@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <h2 class="title">Change password</h2>
+                <small class="form-text sub-title">Please enter a new password</small>
+            </nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="profileResetPassForm" (ngSubmit)="onSubmit()"> 
+                    <div *ngIf="errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+                        <div *ngFor="let error of errors">{{ error }}</div>
+                    </div>
+                    <div *ngIf="messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+                        <div *ngFor="let message of messages">{{ message }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="oldpassword" class="sr-only">Old Password</label>
+                        <input type="password" id="oldpassword" formControlName="oldpassword" placeholder="Old Password" class="form-control" [class.form-control-danger]="profileResetPassForm.get('oldpassword').invalid && profileResetPassForm.get('oldpassword').touched">
+                        <span *ngIf="!profileResetPassForm.get('oldpassword').valid && profileResetPassForm.get('oldpassword').touched" class="form-text error">
+                                  <span *ngIf="profileResetPassForm.get('oldpassword').errors['required']">Old password field is required!</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="newpassword" class="sr-only">New Password</label>
+                        <input type="password" id="newpassword" formControlName="newpassword" placeholder="New Password" class="form-control" [class.form-control-danger]="profileResetPassForm.get('newpassword').invalid && profileResetPassForm.get('newpassword').touched">
+                        <span *ngIf="!profileResetPassForm.get('newpassword').valid && profileResetPassForm.get('newpassword').touched" class="form-text error">
+                                  <span *ngIf="profileResetPassForm.get('newpassword').errors['required']">New password field is required!</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmpassword" class="sr-only">Confirm Password</label>
+                        <input type="password" id="confirmpassword" formControlName="confirmpassword" placeholder="Confirm Password" class="form-control" [class.form-control-danger]="profileResetPassForm.get('confirmpassword').invalid && profileResetPassForm.get('confirmpassword').touched">
+                        <span *ngIf="!profileResetPassForm.get('confirmpassword').valid && profileResetPassForm.get('confirmpassword').touched" class="form-text error">
+                                  <span *ngIf="profileResetPassForm.get('confirmpassword').errors['required']">Confirm password field is required!</span>
+                                   <span *ngIf="profileResetPassForm.get('confirmpassword').errors['NotEqual']">Password does not match the confirm password!</span> 
+                        </span>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button [disabled]="submitted || !profileResetPassForm.valid" class="btn btn-hero-success" [class.btn-pulse]="submitted">
+                                Change password
+                            </button>
+                        </div>
+                    </div>
+                    <br/>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

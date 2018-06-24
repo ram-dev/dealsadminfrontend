@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>
+                <h2 class="title">Profile</h2>
+            </nb-card-header>
+        </nb-card>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <nb-card>
+                <nb-card-header>
+                    <small class="form-text sub-title">User Details</small>
+                </nb-card-header>
+                <nb-card-body>
+                    <div *ngIf="!profileForm.valid && profileForm.touched" class="alert alert-danger" role="alert">
+                        <div><strong>Please enter valid data!</strong></div>
+                    </div>
+                    <div *ngIf="!profileForm.valid && errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+		                <div><strong>Oh snap!</strong></div>
+		                <div *ngFor="let error of errors">{{ error }}</div>
+		            </div>
+		            <div *ngIf="messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+		                <div><strong>Hooray!</strong></div>
+		                <div *ngFor="let message of messages">{{ message }}</div>
+		            </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" formControlName="firstName" class="form-control" [class.form-control-danger]="profileForm.get('firstName').invalid && profileForm.get('firstName').touched">
+                                <span *ngIf="!profileForm.get('firstName').valid && profileForm.get('firstName').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('firstName').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" formControlName="lastName" class="form-control" [class.form-control-danger]="profileForm.get('lastName').invalid && profileForm.get('lastName').touched">
+                                <span *ngIf="!profileForm.get('lastName').valid && profileForm.get('lastName').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('lastName').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="username">Email</label>
+                               
+                                <input type="text" disabled="disabled" id="username1" formControlName="username" class="form-control" [class.form-control-danger]="profileForm.get('username').invalid && profileForm.get('username').touched">
+                                <span *ngIf="!profileForm.get('username').valid && profileForm.get('username').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('username').errors['required']">This field is required!</span>
+                                <span *ngIf="!profileForm.get('username').valid && profileForm.get('username').touched" class="form-text error">Please enter a valid email!</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="">Gender</label>
+                                <div class="row">
+                                    <div class="form-check col-sm-4" *ngFor="let gender of genders">
+                                        <label class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" formControlName="gender" [value]="gender">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">{{ gender }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span *ngIf="!profileForm.get('gender').valid && profileForm.get('gender').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('gender').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="birthDate">Birth date</label>
+                                <input type="date" id="birthDate" formControlName="birthDate" class="form-control" [class.form-control-danger]="profileForm.get('birthDate').invalid && profileForm.get('birthDate').touched">
+                                <span *ngIf="!profileForm.get('birthDate').valid && profileForm.get('birthDate').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('birthDate').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4" formGroupName="contacts">
+                            <div class="form-group">
+                                <label for="phone1">Phone</label>
+                                <input type="text" id="phone1" formControlName="phone1" class="form-control" [class.form-control-danger]="profileForm.get('contacts.phone1').invalid && profileForm.get('contacts.phone1').touched">
+                                <span *ngIf="!profileForm.get('contacts.phone1').valid && profileForm.get('contacts.phone1').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.phone1').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div formGroupName="contacts" class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" formControlName="address" class="form-control" [class.form-control-danger]="profileForm.get('contacts.address').invalid && profileForm.get('contacts.address').touched">
+                                <span *ngIf="!profileForm.get('contacts.address').valid && profileForm.get('contacts.address').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.address').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" formControlName="city" class="form-control" [class.form-control-danger]="profileForm.get('contacts.city').invalid && profileForm.get('contacts.city').touched">
+                                <span *ngIf="!profileForm.get('contacts.city').valid && profileForm.get('contacts.city').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.city').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" formControlName="state" class="form-control" [class.form-control-danger]="profileForm.get('contacts.state').invalid && profileForm.get('contacts.state').touched">
+                                <span *ngIf="!profileForm.get('contacts.state').valid && profileForm.get('contacts.state').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.state').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" id="country" formControlName="country" class="form-control" [class.form-control-danger]="profileForm.get('contacts.country').invalid && profileForm.get('contacts.country').touched">
+                                <span *ngIf="!profileForm.get('contacts.country').valid && profileForm.get('contacts.country').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.country').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="zip">Zip</label>
+                                <input type="text" id="zip" formControlName="zip" class="form-control" [class.form-control-danger]="profileForm.get('contacts.zip').invalid && profileForm.get('contacts.zip').touched">
+                                <span *ngIf="!profileForm.get('contacts.zip').valid && profileForm.get('contacts.zip').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.zip').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="locality">Landmark</label>
+                                <input type="text" id="locality" formControlName="locality" class="form-control" [class.form-control-danger]="profileForm.get('contacts.locality').invalid && profileForm.get('contacts.locality').touched">
+                                <span *ngIf="!profileForm.get('contacts.locality').valid && profileForm.get('contacts.locality').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.locality').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="phone2">Alternative Number</label>
+                                <input type="text" id="phone2" formControlName="phone2" class="form-control" [class.form-control-danger]="profileForm.get('contacts.phone1').invalid && profileForm.get('contacts.phone1').touched">
+                                <span *ngIf="!profileForm.get('contacts.phone2').valid && profileForm.get('contacts.phone2').touched" class="form-text error">				             
+					              <span *ngIf="profileForm.get('contacts.phone2').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+            <div class="row">
+                <div class="col-md-12">
+                    <button [disabled]="submitted || !profileForm.valid" class="btn btn-hero-success" type="submit">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+            <br/>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<nb-card size="large">
+<!--   <div class="consumption-table">
+    <div class="table-header">
+      <div>Deals</div>
+      <div class="subtitle">Download</div>
+    </div>
+
+    <nb-tabset fullWidth>
+      <nb-tab *ngFor="let year of data" [tabTitle]="year.title" [active]="year.active">
+        <div class="stats-month" *ngFor="let month of year.months">
+          <div>
+            <span class="month">{{ month.month }}</span>
+            <span class="delta" [ngClass]="{ 'down': month.down }">{{ month.delta }}</span>
+          </div>
+          <div class="results">
+            <b>{{ month.kWatts }}</b> RS / <b>{{ month.cost }}</b> RS
+          </div>
+        </div>
+      </nb-tab>
+    </nb-tabset>
+  </div> -->
+
+  <div class="chart-container">
+    <div class="chart-header">
+      <div class="header-stats">
+        
+
+        <div class="stats-block">
+          <div class="subtitle">Total Amount </div>
+          <div>
+            <span class="value">0</span>
+            <span class="unit">RS</span>
+          </div>
+        </div>
+        <div class="stats-block">
+          <div class="subtitle">Spent Amount </div>
+          <div>
+            <span class="value">0</span>
+            <span class="unit">RS</span>
+          </div>
+        </div>
+      </div>
+
+      <div ngbDropdown>
+        <button type="button" ngbDropdownToggle class="btn"
+                [ngClass]="{ 'btn-outline-success': currentTheme == 'default', 'btn-primary': currentTheme != 'default'}">
+          {{ type }}
+        </button>
+        <ul class="dropdown-menu">
+          <li class="dropdown-item" *ngFor="let t of types" (click)="type = t">{{ t }}</li>
+        </ul>
+      </div>
+
+    </div>
+    <ngx-downloadgraph-chart></ngx-downloadgraph-chart>
+  </div>
+</nb-card>

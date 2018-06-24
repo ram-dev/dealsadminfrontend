@@ -1,0 +1,11 @@
+<nb-card>
+  <nb-card-header>
+    All Vendors 
+    <a href="/#/merchants/deals/edit" style="position: absolute;right: 18px;top: 11px;" class="btn btn-outline-success btn-sm"><i class="nb-plus"></i> Create Vendors</a>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

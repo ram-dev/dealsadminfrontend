@@ -1,0 +1,239 @@
+<ng-template #itemTemplate let-item="item" let-onCollapseExpand="onCollapseExpand" let-onCheckedChange="onCheckedChange">
+  <div class="form-inline row-item">
+    <i *ngIf="item.children" (click)="onCollapseExpand()" aria-hidden="true" class="fa" [class.fa-caret-right]="item.collapsed"
+      [class.fa-caret-down]="!item.collapsed"></i>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="item.checked" (ngModelChange)="onCheckedChange()" [disabled]="item.disabled"
+        [indeterminate]="item.indeterminate" />
+      <label class="form-check-label">       
+        <img src="{{item.value.text}}" style="width: 50px;"/> {{item.value.name}}
+      </label>
+    </div>
+  </div>
+</ng-template>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <nb-card class="inline-form-card">
+            <nb-card-header>
+                <div class="clearfix">
+                    <h4 style="line-height: 2;" class="float-left">{{DealType}} Deals</h4>
+                    <a href="/#/merchants/deals/list" class="btn btn-secondary float-right btn-sm "><i class="nb-arrow-left"></i> Back</a>
+                </div>
+            </nb-card-header>
+        </nb-card>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nb-card class="inline-form-card">
+            <nb-card-body>
+                <form [formGroup]="dealForm" (ngSubmit)="onSubmit()">
+                    <div *ngIf="!dealForm.valid && errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+                        <div><strong>Oh snap!</strong></div>
+                        <div *ngFor="let error of errors">{{ error }}</div>
+                    </div>
+                    <div *ngIf="messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+                        <div><strong>Hooray!</strong></div>
+                        <div *ngFor="let message of messages">{{ message }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Deal Name</label>
+                                <input type="text" id="name" formControlName="name" class="form-control" [class.form-control-danger]="dealForm.get('name').invalid && dealForm.get('name').touched">
+                                <span *ngIf="!dealForm.get('name').valid && dealForm.get('name').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('name').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="outletIds">Outlet</label>
+                                <ngx-dropdown-treeview [config]="config" [items]="outletIdItems | ngxTreeview:'text'" [buttonClass]="buttonClass" (selectedChange)="onSelectedOutletChange($event)">
+                              </ngx-dropdown-treeview>                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="images">Images</label>
+                                 <ngx-dropdown-treeview [config]="config" [items]="imgIdItems | ngxTreeview:'name'" [buttonClass]="buttonClass" (selectedChange)="onSelectedImageChange($event)" [itemTemplate]="itemTemplate">
+                              </ngx-dropdown-treeview>
+                              
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mainCategoryId">Category</label>
+                                <select name="mainCategoryId"  id="mainCategoryId" (change)="onSelectedMainCatChange()" formControlName="mainCategoryId" class="form-control" [class.form-control-danger]="dealForm.get('mainCategoryId').invalid && dealForm.get('mainCategoryId').touched">
+                                    <option *ngFor="let category of mainCategoryList" [ngValue]="category._id">
+                                      {{ category.name }}
+                                    </option>
+                                </select>                                
+                                <span *ngIf="!dealForm.get('mainCategoryId').valid && dealForm.get('mainCategoryId').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('mainCategoryId').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="subCategoryIds">Sub Category</label>                                
+                                <ngx-dropdown-treeview [config]="config" [items]="subCategoryitems | ngxTreeview:'name'" [buttonClass]="buttonClass" 
+                                (selectedChange)="onSelectedSubCatChange($event)" >
+                              </ngx-dropdown-treeview>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="offertype">offer type</label>
+                                <select name="offertype"  id="offertype" formControlName="offertype" class="form-control" (change)="offerChange()" [(ngModel)]="selectedPackage" [class.form-control-danger]="dealForm.get('offertype').invalid && dealForm.get('offertype').touched">
+                                    <option *ngFor="let oftype of offerTypeList" [ngValue]="oftype.value">
+                                      {{ oftype.name }}
+                                    </option>
+                                </select>   
+                                <span *ngIf="!dealForm.get('offertype').valid && dealForm.get('offertype').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('offertype').errors['required']">This field is required!</span>
+                                </span>                                                           
+                            </div>
+                        </div>
+                        <div class="col-md-4" [style.display]="(selectedPackage == '1') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">% Discount On</label>
+                                <input type="number" id="offertype_one" (change)="onChangeValue($event)" [disabled]="(selectedPackage == '1') ? 'false' : 'true'" formControlName="offertype_one" class="form-control full-width" [class.form-control-danger]="dealForm.get('offertype_one').invalid && dealForm.get('offertype_one').touched" placeholder="% Discount On">
+                            </div>                            
+                        </div>
+                        <div class="col-md-4" [style.display]="(selectedPackage == '1') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Select option</label>
+                                <select class="form-control" (change)="onChangeValue($event)" formControlName="offertype_two" [disabled]="(selectedPackage == '1') ? 'false' : 'true'" [class.form-control-danger]="dealForm.get('offertype_two').invalid && dealForm.get('offertype_two').touched" >
+                                    <option value="Total bill">Total bill</option>
+                                    <option value="Food Only">Food Only</option>
+                                    <option value="Drink Only">Drink Only</option>
+                                </select>
+                            </div>                           
+                        </div>
+                        <div class="col-md-4" [style.display]="(selectedPackage == '2') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Get Rs.</label>
+                                <input type="number" (change)="onChangeValue($event)" class="form-control full-width" id="offertype_one" [disabled]="(selectedPackage == '2') ? 'false' : 'true'" formControlName="offertype_one"  [class.form-control-danger]="dealForm.get('offertype_one').invalid && dealForm.get('offertype_one').touched" placeholder="Get Rs.">
+                            </div>
+                        </div>
+                        <div class="col-md-4" [style.display]="(selectedPackage == '2') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Off on a Minimum bill of</label>
+                                <input type="number" (change)="onChangeValue($event)" formControlName="offertype_two" [disabled]="(selectedPackage == '2') ? 'false' : 'true'" [class.form-control-danger]="dealForm.get('offertype_two').invalid && dealForm.get('offertype_two').touched" class="form-control full-width" placeholder="Off on a Minimum bill of">
+                            </div>
+                        </div>
+                        <div class="col-md-4" [style.display]="(selectedPackage == '3') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Buy</label>
+                                <input type="number" (change)="onChangeValue($event)" class="form-control full-width" id="offertype_one" [disabled]="(selectedPackage == '3') ? 'false' : 'true'" formControlName="offertype_one"  [class.form-control-danger]="dealForm.get('offertype_one').invalid && dealForm.get('offertype_one').touched" placeholder="Buy">
+                            </div>
+                        </div>
+                        <div class="col-md-4" [style.display]="(selectedPackage == '3') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Get Free</label>
+                                <input type="number" (change)="onChangeValue($event)" formControlName="offertype_two" class="form-control full-width" [disabled]="(selectedPackage == '3') ? 'false' : 'true'" [class.form-control-danger]="dealForm.get('offertype_two').invalid && dealForm.get('offertype_two').touched" placeholder="Get Free">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">                       
+                        <div class="col-md-6" [style.display]="(selectedPackage == '4') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Discount (%)</label>
+                                <input type="text"  formControlName="discount" class="form-control full-width"[class.form-control-danger]="dealForm.get('discount').invalid && dealForm.get('discount').touched" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6" [style.display]="(selectedPackage == '4') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Offer</label>
+                                <input type="text" formControlName="offer" class="form-control full-width" [class.form-control-danger]="dealForm.get('offer').invalid && dealForm.get('offer').touched" placeholder="Offer Description">
+                            </div>
+                        </div>
+                         <div class="col-md-6" [style.display]="(selectedPackage != '4') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Discount (%)</label>
+                                <input disabled formControlName="discount" type="text" class="form-control full-width"[class.form-control-danger]="dealForm.get('discount').invalid && dealForm.get('discount').touched" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6" [style.display]="(selectedPackage != '4') ? 'block' : 'none'">
+                            <div class="form-group">
+                                <label for="inputFirstName">Offer</label>
+                                <input disabled type="text" formControlName="offer" class="form-control full-width" [class.form-control-danger]="dealForm.get('offer').invalid && dealForm.get('offer').touched" placeholder="Offer Description">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="offerDeatils">Offer Details</label>
+                                <textarea rows="2" id="offerDeatils" formControlName="offerDeatils" placeholder="Offer Details" class="form-control"  [class.form-control-danger]="dealForm.get('offerDeatils').invalid && dealForm.get('offerDeatils').touched"></textarea>
+                                <span *ngIf="!dealForm.get('offerDeatils').valid && dealForm.get('offerDeatils').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('offerDeatils').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="terms">Terms and Condition</label>                                
+                                <textarea rows="2" id="terms" formControlName="terms" placeholder="Terms and Condition" class="form-control"  [class.form-control-danger]="dealForm.get('terms').invalid && dealForm.get('terms').touched"></textarea>
+                                <span *ngIf="!dealForm.get('terms').valid && dealForm.get('terms').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('terms').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="offerValidFrom">Coupon Valid From</label>
+                                <input type="date" id="offerValidFrom" formControlName="offerValidFrom" class="form-control" placeholder="From Date" [class.form-control-danger]="dealForm.get('offerValidFrom').invalid && dealForm.get('offerValidFrom').touched">
+                                <span *ngIf="!dealForm.get('offerValidFrom').valid && dealForm.get('offerValidFrom').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('offerValidFrom').errors['required']">This field is required!</span>
+                                </span>                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="offerValidTo">Coupon Valid Till</label>
+                                <input type="date" id="offerValidTo" formControlName="offerValidTo" class="form-control" placeholder="To Date" [class.form-control-danger]="dealForm.get('offerValidTo').invalid && dealForm.get('offerValidTo').touched">
+                                <span *ngIf="!dealForm.get('offerValidTo').valid && dealForm.get('offerValidTo').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('offerValidTo').errors['required']">This field is required!</span>
+                                </span>                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fundAllocation">Fund Allocation (Balance : Rs {{amount}})</label>
+                                <input type="text" id="fundAllocation" formControlName="fundAllocation" class="form-control" placeholder="Amount" [class.form-control-danger]="dealForm.get('fundAllocation').invalid && dealForm.get('fundAllocation').touched">
+                                <span *ngIf="!dealForm.get('fundAllocation').valid && dealForm.get('fundAllocation').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('fundAllocation').errors['required']">This field is required!</span>
+                                </span>                               
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dayAllocationType">Days Allocation</label>
+                                <select name="dayAllocationType"  id="dayAllocationType" formControlName="dayAllocationType" class="form-control" [class.form-control-danger]="dealForm.get('dayAllocationType').invalid && dealForm.get('dayAllocationType').touched">
+                                    <option *ngFor="let day of daysType" [ngValue]="day">
+                                      {{ day }}
+                                    </option>
+                                </select>   
+                                <span *ngIf="!dealForm.get('dayAllocationType').valid && dealForm.get('dayAllocationType').touched" class="form-text error">                           
+                                  <span *ngIf="dealForm.get('dayAllocationType').errors['required']">This field is required!</span>
+                                </span>   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 btn-deals" style="margin-bottom: 20px;">
+                            <button class="btn btn-success btn-semi-round btn-sm">Save as Draft</button>
+                            <button class="btn btn-success btn-semi-round btn-sm" disabled="true">Go Live</button>
+                        </div>
+                        <br/>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

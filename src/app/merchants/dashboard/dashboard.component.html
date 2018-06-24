@@ -1,0 +1,19 @@
+<div class="row" *ngIf="statsData">
+  <div class="col-xxxl-4 col-md-4">
+    <ngx-status-card title="Totol Vendors" value="{{statsData.total_vendor}}" type="primary">
+      <i class="fa fa-user"></i>
+    </ngx-status-card>
+  </div>
+
+  <div class="col-xxxl-4 col-md-4">
+    <ngx-status-card title="Total Deals" value="{{statsData.total_deals}}" type="success">
+      <i class="fa fa-briefcase"></i>
+    </ngx-status-card>
+  </div>
+
+  <div class="col-xxxl-4 col-md-4">
+    <ngx-status-card title="Total Downloads" value="{{statsData.total_downloads}}" type="info">
+      <i class="fa fa-download"></i>
+    </ngx-status-card>
+  </div>  
+</div>

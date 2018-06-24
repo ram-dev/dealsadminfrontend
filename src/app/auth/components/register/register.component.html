@@ -1,0 +1,151 @@
+<nb-auth-block>
+    <nb-card>
+        <nb-card-body>
+            <div class="register col-xl-6 col-lg-6 col-md-8 col-sm-12">
+                <h2 class="title">Sign Up</h2>
+                <form (ngSubmit)="register()" #form="ngForm">
+                    <div *ngIf="showMessages.error && errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+                        <div><strong>Oh snap!</strong></div>
+                        <div *ngFor="let error of errors">{{ error }}</div>
+                    </div>
+                    <div *ngIf="showMessages.success && messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+                        <div><strong>Hooray!</strong></div>
+                        <div *ngFor="let message of messages">{{ message }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label for="input-companyname" class="sr-only-no">Company name</label>
+                                <input name="companyname" [(ngModel)]="user.companyname" id="input-companyname" #companyname="ngModel" class="form-control" placeholder="Company name" [class.form-control-danger]=" companyname.invalid && companyname.touched" [required]="getConfigValue('forms.validation.companyname.required')" [minlength]="getConfigValue('forms.validation.companyname.minLength')" [maxlength]="getConfigValue('forms.validation.companyname.maxLength')" >
+                                <small class="form-text error" *ngIf="companyname.invalid && companyname.touched && companyname.errors?.required">
+                                  Company name is required!
+                                </small>
+                                <small class="form-text error" *ngIf="companyname.invalid && companyname.touched && (companyname.errors?.minlength || companyname.errors?.maxlength)">
+                                  Company name should contains
+                                  from {{getConfigValue('forms.validation.password.minLength')}}
+                                  to {{getConfigValue('forms.validation.password.maxLength')}}
+                                  characters
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                          <div class="form-group">
+                                <label for="input-categoryId" class="sr-only-no">Business Type</label>
+                                <select name="categoryId" [(ngModel)]='user.categoryId' id="select-categoryId"
+                                #categoryId="ngModel" class="form-control" 
+                                [class.form-control-danger]="categoryId.invalid && categoryId.touched" 
+                                [required]="getConfigValue('forms.validation.categoryId.required')"
+                                >                                                                    
+                                  <option *ngFor="let r of categoryList" [value]="r.id">{{ r.label }}</option> 
+                                </select>
+                                 <small class="form-text error" *ngIf="categoryId.invalid && categoryId.touched && categoryId.errors?.required">
+                                  Please select Business type!
+                                </small>
+                            </div>                            
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label for="input-firstName" class="sr-only-no">First name</label>
+                                <input name="firstName" [(ngModel)]="user.firstName" id="input-firstName" #firstName="ngModel" class="form-control" placeholder="First name" [class.form-control-danger]="firstName.invalid && firstName.touched" [required]="getConfigValue('forms.validation.firstName.required')" [minlength]="getConfigValue('forms.validation.firstName.minLength')" [maxlength]="getConfigValue('forms.validation.firstName.maxLength')" >
+                                <small class="form-text error" *ngIf="firstName.invalid && firstName.touched && firstName.errors?.required">
+                                  First name is required!
+                                </small>
+                                <small class="form-text error" *ngIf="firstName.invalid && firstName.touched && (firstName.errors?.minlength || firstName.errors?.maxlength)">
+                                  First name should contains
+                                  from {{getConfigValue('forms.validation.password.minLength')}}
+                                  to {{getConfigValue('forms.validation.password.maxLength')}}
+                                  characters
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label for="input-lastName" class="sr-only-no">Last name</label>
+                                <input name="lastName" [(ngModel)]="user.lastName" id="input-lastName" #lastName="ngModel" class="form-control" placeholder="Last name" [class.form-control-danger]="lastName.invalid && lastName.touched" [required]="getConfigValue('forms.validation.lastName.required')" [minlength]="getConfigValue('forms.validation.lastName.minLength')" [maxlength]="getConfigValue('forms.validation.lastName.maxLength')">
+                                <small class="form-text error" *ngIf="lastName.invalid && lastName.touched && lastName.errors?.required">
+                                  Last name is required!
+                                </small>
+                                <small class="form-text error" *ngIf="lastName.invalid && lastName.touched && (lastName.errors?.minlength || lastName.errors?.maxlength)">
+                                  Last name should contains
+                                  from {{getConfigValue('forms.validation.password.minLength')}}
+                                  to {{getConfigValue('forms.validation.password.maxLength')}}
+                                  characters
+                                </small>
+                            </div>
+                        </div> 
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                          <div class="form-group">
+                              <label for="input-contactNumber" class="sr-only-no">Contact number</label>
+                              <input name="contactNumber" [(ngModel)]="user.contactNumber" id="input-contactNumber" #contactNumber="ngModel" class="form-control" placeholder="Contact number" pattern="[0-9]{10}$" [class.form-control-danger]="contactNumber.invalid && contactNumber.touched" [required]="getConfigValue('forms.validation.contactNumber.required')" [minlength]="10" [maxlength]="10" >
+                              <small class="form-text error" *ngIf="contactNumber.invalid && contactNumber.touched && contactNumber.errors?.required">
+                                Contact number is required!
+                              </small>  
+                               <small class="form-text error" *ngIf="contactNumber.invalid && contactNumber.touched && (contactNumber.errors?.minlength || contactNumber.errors?.maxlength)">
+                                  Contact Number should contain 10 numbers
+                                </small>  
+                                <small class="form-text error" *ngIf="contactNumber.invalid && contactNumber.touched && contactNumber.errors?.pattern">
+                                Contact Number should be only digits / numder
+                              </small>                          
+                          </div>
+                        </div>              
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                          <div class="form-group">
+                              <label for="input-username" class="sr-only-no">Email address</label>
+                              <input name="username" [(ngModel)]="user.username" type="text" id="input-username"  class="form-control" placeholder="Email address" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #username="ngModel" 
+                              [class.form-control-danger]="username.invalid && username.touched" [required]="getConfigValue('forms.validation.username.required')">
+                              <small class="form-text error" *ngIf="username.invalid && username.touched && username.errors?.required">
+                                Email is required!
+                              </small>
+                              <small class="form-text error" *ngIf="username.invalid && username.touched && username.errors?.pattern">
+                                Email should be the real one!
+                              </small>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                          <div class="form-group">
+                              <label for="input-password" class="sr-only-no">Password</label>
+                              <input name="password" [(ngModel)]="user.password" type="password" id="input-password" class="form-control" placeholder="Password" #password="ngModel" [class.form-control-danger]="password.invalid && password.touched" [required]="getConfigValue('forms.validation.password.required')" [minlength]="getConfigValue('forms.validation.password.minLength')" [maxlength]="getConfigValue('forms.validation.password.maxLength')">
+                              <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
+                                Password is required!
+                              </small>
+                              <small class="form-text error" *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
+                                Password should contains
+                                from {{ getConfigValue('forms.validation.password.minLength') }}
+                                to {{ getConfigValue('forms.validation.password.maxLength') }}
+                                characters
+                              </small>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                          <div class="form-group">
+                              <label for="input-re-password" class="sr-only-no">Repeat password</label>
+                              <input name="rePass" [(ngModel)]="user.confirmpassword" type="password" id="input-re-password" class="form-control" placeholder="Confirm Password" #rePass="ngModel" [class.form-control-danger]="(rePass.invalid || password.value != rePass.value) && rePass.touched" [required]="getConfigValue('forms.validation.password.required')">
+                              <small class="form-text error" *ngIf="rePass.invalid && rePass.touched && rePass.errors?.required">
+                                Password confirmation is required!
+                              </small>
+                              <small class="form-text error" *ngIf="rePass.touched && password.value != rePass.value && !rePass.errors?.required">
+                                Password does not match the confirm password.
+                              </small>
+                          </div>
+                        </div>
+                    </div>                   
+                    
+                    
+                    <div class="form-group accept-group col-sm-12" *ngIf="getConfigValue('forms.register.terms')">
+                        <nb-checkbox name="terms" [(ngModel)]="user.terms" [required]="getConfigValue('forms.register.terms')">
+                            Agree to <a href="#" target="_blank"><strong>Terms & Conditions</strong></a>
+                        </nb-checkbox>
+                    </div>
+                    <button [disabled]="submitted || !form.valid" class="btn btn-block btn-hero-success" [class.btn-pulse]="submitted">
+                        Register
+                    </button>
+                </form>
+                <div class="links">
+                    <small class="form-text">
+                      Already have an account? <a routerLink="../login"><strong>Sign in</strong></a>
+                    </small>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</nb-auth-block>

@@ -1,0 +1,46 @@
+@import '../../styles/themes';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+@include nb-install-component() {
+.multiplecarousel-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.multiplecarousel-wrapper {
+  overflow: hidden;
+}
+.multiplecarousel {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  transition: transform 1s, -webkit-transform 1s;
+}
+.controls {
+  pointer-events: none;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.controls button{
+  pointer-events: all;
+  background: transparent;
+  border: 0;
+  font-size: 2.5rem;
+  color: #3dcc6d;
+}
+}
