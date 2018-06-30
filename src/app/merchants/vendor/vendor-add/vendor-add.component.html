@@ -1,0 +1,58 @@
+<div class="row" *ngIf="dealSource">
+    <div class="col-md-12">
+        <nb-card class="inline-form-card">
+            <nb-card-header>
+                <div class="clearfix">
+                    <h4 style="line-height: 2;" class="float-left">{{dealSource.name}} <span class="small-cap">add amount</span> </h4>
+                    <a href="/#/admin-merchants/vendor/list" class="btn btn-secondary float-right btn-sm "><i class="nb-arrow-left"></i> Back</a>
+                </div>
+            </nb-card-header>
+        </nb-card>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nb-card class="inline-form-card">
+            <nb-card-body>
+                <form [formGroup]="addAmountForm" (ngSubmit)="onSubmit()">
+                    <div *ngIf="!addAmountForm.valid && errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+                        <div><strong>Oh snap!</strong></div>
+                        <div *ngFor="let error of errors">{{ error }}</div>
+                    </div>
+                    <div *ngIf="messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+                        <div><strong>Hooray!</strong></div>
+                        <div *ngFor="let message of messages">{{ message }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="amount">Amount</label>
+                                <input type="number" id="amount" formControlName="amount" class="form-control" [class.form-control-danger]="addAmountForm.get('amount').invalid && addAmountForm.get('amount').touched">
+                                <span *ngIf="!addAmountForm.get('amount').valid && addAmountForm.get('amount').touched" class="form-text error">                           
+                                  <span *ngIf="addAmountForm.get('amount').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="paymentinfo">paymentinfo</label>
+                                <input type="text" id="paymentinfo" formControlName="paymentinfo" class="form-control" [class.form-control-danger]="addAmountForm.get('paymentinfo').invalid && addAmountForm.get('paymentinfo').touched">
+                                <span *ngIf="!addAmountForm.get('paymentinfo').valid && addAmountForm.get('paymentinfo').touched" class="form-text error">                           
+                                  <span *ngIf="addAmountForm.get('paymentinfo').errors['required']">This field is required!</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 btn-deals" style="margin-bottom: 20px;">
+                            <button class="btn btn-success btn-semi-round btn-sm">Add Amount</button>
+                        </div>
+                        <br/>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

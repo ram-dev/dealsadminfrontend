@@ -70,5 +70,15 @@ export class MerchantListService {
             }
         );
     }  
+
+    addAmountMerchant(merchant, merchantId): Observable<any> {
+        return this.apiService
+           .post('merchant/addamount/'+merchantId, merchant)
+           .map((res) => res)
+           .catch((error) => {
+                return error
+            }
+        );
+    }
         
 }

@@ -65,7 +65,7 @@ export class VendorListComponent {
           <div class="btn-group btn-divided-group ">
           <a title="View" class="btn btn-primary  btn-icon" href="/#/admin-merchants/vendor/view/${row._id}"> 
           <i class="fa fa-ellipsis-h"></i> 
-          <a title="Add amount" class="btn btn-primary  btn-icon" href="/#/admin-merchants/vendor/add/${row._id}"> 
+          <a title="Add amount" class="btn btn-primary  btn-icon" href="/#/admin-merchants/vendor/add-amount/${row._id}"> 
           <i class="fa fa-plus-square-o"></i> 
           </div></div>`
         },
