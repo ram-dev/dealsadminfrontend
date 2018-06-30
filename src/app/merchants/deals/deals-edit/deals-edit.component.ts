@@ -100,7 +100,7 @@ export class DealsEditComponent {
     var self = this;
     if(this.dealForm.valid){
       if(this.dealId){
-        this.dealService.updateDeal(formData, this.merchantId, this.dealId)
+        this.dealService.goliveDeal(formData, this.dealId)
           .subscribe(
             (result)=>{
               console.log(result);

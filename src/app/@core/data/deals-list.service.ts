@@ -33,10 +33,20 @@ export class DealsListService {
         );
     }
 
-     getAllGoliveDeal(): Observable<any> {
+    getAllGoliveDeal(): Observable<any> {
         return this.apiService.get('deal/?golive=true')
             .map((res) => res)
             .catch((error) => {
+                return error
+            }
+        );
+    }
+
+    goliveDeal(dealData, dealId): Observable<any> {
+        return this.apiService
+           .post('deal/'+dealId+'/golive', dealData)
+           .map((res) => res)
+           .catch((error) => {
                 return error
             }
         );
