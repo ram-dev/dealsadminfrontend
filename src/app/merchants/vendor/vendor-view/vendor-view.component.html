@@ -1,0 +1,132 @@
+<div class="row" *ngIf="dealSource">
+    <div class="col-md-12">
+        <nb-card class="inline-form-card">
+            <nb-card-header>
+                <div class="clearfix">
+                    <h4 style="line-height: 2;" class="float-left">{{dealSource.name}} <span class="small-cap">merchant details</span> </h4>
+                    <a href="/#/admin-merchants/vendor/list" class="btn btn-secondary float-right btn-sm "><i class="nb-arrow-left"></i> Back</a>
+                </div>
+            </nb-card-header>
+        </nb-card>
+    </div>
+</div>
+<div class="row" *ngIf="dealSource">
+    <div class="col-md-12">
+        <nb-card class="inline-form-card">
+            <nb-card-body>
+                <div class="row merchantWrapper">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body text-center">
+                                <div class="h4 text-center">Contact</div>
+                                <div class="pv-lg"><img class="center-block img-responsive img-circle img-thumbnail thumb96" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Contact"></div>
+                                <h3 class="m0 text-bold">{{dealSource.userId.firstName}} {{dealSource.userId.lastName}} </h3>
+                                <div class="mv-lg">
+                                    <p><i class="fa fa-envelope" aria-hidden="true"></i> {{dealSource.userId.username}}</p>
+                                    <p><i class="fa fa-phone-square" aria-hidden="true"></i> {{dealSource.userId.contacts.phone1}}</p>
+                                    <p *ngIf="dealSource.userId.contacts.phone2"><i class="fa fa-phone-square" aria-hidden="true"></i> {{dealSource.userId.contacts.phone2}}</p>
+                                </div>
+                                <div class="mv-lg">
+                                    <p *ngIf="dealSource.userId.contacts.address"><i class="fa fa-address-card" aria-hidden="true"></i> Address:</p>
+                                    <p>
+                                        <span *ngIf="dealSource.userId.contacts.address">{{dealSource.userId.contacts.address}}
+                                        </span>
+                                        <span *ngIf="dealSource.userId.contacts.locality">{{dealSource.userId.contacts.locality}}
+                                        </span>
+                                        <span *ngIf="dealSource.userId.contacts.city">{{dealSource.userId.contacts.city}}
+                                        </span>
+                                        <span *ngIf="dealSource.userId.contacts.state">{{dealSource.userId.contacts.state}}
+                                        </span>
+                                        <span *ngIf="dealSource.userId.contacts.country">{{dealSource.userId.contacts.country}}
+                                        </span>
+                                        <span *ngIf="dealSource.userId.contacts.zip">{{dealSource.userId.contacts.zip}}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default hidden-xs hidden-sm">
+                            <div class="panel-heading">
+                                <div class="h4 text-center">Merchant Gallery</div>
+                            </div>
+                            <div class="panel-body" *ngIf="images">
+                                <div class="media" *ngFor="let img of images">
+                                    <div class="media-left media-middle">
+                                        <a href="#"><img class="media-object img-circle img-thumbnail thumb48" src="{{img.path}}" alt="Contact"></a>
+                                    </div>
+                                    <div class="media-body pt-sm">
+                                        <div class="text-bold"> {{img.image.filename}}
+                                            <div class="text-sm text-muted">{{img.image.size}} kb</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="h4 text-center">Merchant Information</div>
+                                <div class="table-responsive panel">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-success">Company Name</td>
+                                                <td>{{dealSource.name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-success">Website url</td>
+                                                <td>{{dealSource.url}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-success"> Category</td>
+                                                <td><span *ngFor="let cat of dealSource.categoryId">{{cat.name}}, </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-success"> Amenities</td>
+                                                <td><span *ngFor="let aminity of dealSource.amenityId">{{aminity.name}}, </span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="h4 text-center">Outlet Information</div>
+                                <div class="table-responsive panel">
+                                    <table class="table" *ngFor="let outlet of outlets">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-success">Outlet Name</td>
+                                                <td>{{outlet.name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-success">Address</td>
+                                                <td>{{outlet.contacts.address}} 
+                                                    <br> {{outlet.contacts.locality}}
+                                                    <br> {{outlet.contacts.city}} {{outlet.contacts.state}} 
+                                                    <br> {{outlet.contacts.country}} - {{outlet.contacts.zip}}
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="text-success">Contact Number</td>
+                                                <td>{{outlet.contacts.phone1}} / {{outlet.contacts.phone2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-success">Lat and Lung</td>
+                                                <td>{{outlet.latitude}}, {{outlet.longitude}}</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

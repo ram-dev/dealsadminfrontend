@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { VendorComponent } from './vendor.component';
 import { VendorListComponent } from './vendor-list/vendor-list.component';
+import { VendorViewComponent } from './vendor-view/vendor-view.component';
 
 const routes: Routes = [{
   path: '',
@@ -10,6 +11,9 @@ const routes: Routes = [{
   children: [{
     path: 'list',
     component: VendorListComponent,
+  },{
+    path: 'view/:id',
+    component : VendorViewComponent
   }],
 }];
 
@@ -22,5 +26,5 @@ export class VendorRoutingModule { }
 export const routedComponents = [
   VendorComponent,
   VendorListComponent,
-
+  VendorViewComponent
 ];

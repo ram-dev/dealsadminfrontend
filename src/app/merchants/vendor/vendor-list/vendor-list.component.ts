@@ -10,17 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'ngx-vendor-list',
   templateUrl: './vendor-list.component.html',
-  styles: [`
-    nb-card {
-      transform: translate3d(0, 0, 0);
-    }
-    nb-card-body{
-      tr.ng2-smart-filters th{
-        padding:0;
-      }
-    } 
-
-  `],
+  styleUrls: ['./vendor-list.component.scss'] 
 })
 export class VendorListComponent {
 
@@ -40,13 +30,25 @@ export class VendorListComponent {
         title: 'Category',
         type: 'html',
         filter:false,
-        valuePrepareFunction: (cell, row) => { return `` }
+        valuePrepareFunction: (cell, row) => {
+          var item = '';
+          for(var i=0; i < cell.length; i++){
+              item += '<div>'+cell[i].name+'</div>'
+          }                 
+          return item;
+        }
       },
        userId: {
         title: 'User Details',
         type: 'html',
         filter:false,
-        valuePrepareFunction: (cell, row) => { return `` }
+        valuePrepareFunction: (cell, row) => { 
+          var item= '';
+          item += '<div>'+cell.firstName +' '+ cell.lastName+'</div>'; 
+          item += '<div>'+cell.username+'</div>'; 
+          item += '<div>'+cell.contacts.phone1+'</div>';                   
+          return item; 
+        }
       },
       amount: {
         title: 'Amount (Rs)',
@@ -58,12 +60,14 @@ export class VendorListComponent {
         title:'Actions',
         type:'html',
         valuePrepareFunction:(cell,row)=>{         
-          return `<div class="btn-group">
-          <a title="Edit" class="btn btn-primary  btn-icon" href="/#/admin-merchants/vendor/edit/${row._id}"> 
-          <i class="nb-edit"></i> 
-          <a title="Add amount" class="btn btn-primary  btn-icon" href="/#/admin-merchants/vendor/edit/${row._id}"> 
-          <i class="fa fa-inr"></i> 
-          </div>`
+          return `
+         <div class="divided-button-group">
+          <div class="btn-group btn-divided-group ">
+          <a title="View" class="btn btn-primary  btn-icon" href="/#/admin-merchants/vendor/view/${row._id}"> 
+          <i class="fa fa-ellipsis-h"></i> 
+          <a title="Add amount" class="btn btn-primary  btn-icon" href="/#/admin-merchants/vendor/add/${row._id}"> 
+          <i class="fa fa-plus-square-o"></i> 
+          </div></div>`
         },
         filter:false       
       },
@@ -82,7 +86,7 @@ export class VendorListComponent {
         }else{
           var arr = [];
           arr.push(data);          
-         // this.source.load(arr);
+          this.source.load(arr);
         }        
     });    
     //get merchant details check main category is required and minmum onr outlet and one image
