@@ -24,6 +24,24 @@ export class DealsListService {
         );
     }
 
+    getAllActiveDeal(): Observable<any> {
+        return this.apiService.get('deal/?status=true')
+            .map((res) => res)
+            .catch((error) => {
+                return error
+            }
+        );
+    }
+
+     getAllGoliveDeal(): Observable<any> {
+        return this.apiService.get('deal/?golive=true')
+            .map((res) => res)
+            .catch((error) => {
+                return error
+            }
+        );
+    }
+
     getAllDownloadDealByMechantId(merchantId): Observable<any> {
         return this.apiService.get('downloaddeal/'+merchantId)
             .map((res) => res)

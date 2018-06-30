@@ -5,6 +5,8 @@ import { DealsComponent } from './deals.component';
 import { DealsListComponent } from './deals-list/deals-list.component';
 import { DealsEditComponent } from './deals-edit/deals-edit.component';
 import { DealPreviewComponent } from './deals-preview/deals-preview.component';
+import { DealsGoliveComponent } from './deals-golive/deals-golive.component';
+
 
 
 
@@ -18,11 +20,14 @@ const routes: Routes = [{
     path: 'edit',
     component: DealsEditComponent,
   },{
-    path: 'edit/:id',
+    path: 'edit/:id/:merchantId/:isActive',
     component: DealsEditComponent,
   },{
-    path: 'preview/:id',
+    path: 'preview/:id/:merchantId',
     component : DealPreviewComponent
+  },{
+    path: 'golive',
+    component : DealsGoliveComponent
   }],
 }];
 
@@ -36,5 +41,6 @@ export const routedComponents = [
   DealsComponent,
   DealsListComponent,
   DealsEditComponent,
-  DealPreviewComponent
+  DealPreviewComponent,
+  DealsGoliveComponent
 ];

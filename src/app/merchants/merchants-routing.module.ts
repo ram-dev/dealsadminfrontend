@@ -18,6 +18,11 @@ const routes: Routes = [{
     loadChildren: './vendor/vendor.module#VendorModule',
   },
   {
+    path: 'deals',
+    canActivate :[AuthGuard],
+    loadChildren: './deals/deals.module#DealsModule',
+  },
+  {
     path: 'profile',
     canActivate :[AuthGuard],
     loadChildren: './profile/profile.module#ProfileModule',

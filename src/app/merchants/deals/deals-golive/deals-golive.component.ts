@@ -8,8 +8,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
-  selector: 'ngx-deals-list',
-  templateUrl: './deals-list.component.html',
+  selector: 'ngx-deals-golive',
+  templateUrl: './deals-golive.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
@@ -22,7 +22,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
   `],
 })
-export class DealsListComponent {
+export class DealsGoliveComponent {
 
   settings = {   
     actions: {
@@ -77,13 +77,27 @@ export class DealsListComponent {
           return status;          
         },
       },
+      golive:{
+        title: 'Go Live',
+        type: 'string',
+        filter:false,
+        valuePrepareFunction: (cell, row) => {
+          var status = '';
+          if(cell == true){
+            status= "Yes";
+          }else{
+            status= "No";
+          }
+          return status;          
+        },
+      },
       actions: 
       {
         title:'Actions',
         type:'html',
         valuePrepareFunction:(cell,row)=>{         
           return `<div class="btn-group">
-          <a title="Edit" class="btn btn-primary btn-icon" href="/#/admin-merchants/deals/edit/${row._id}/${row.merchantId._id}/true"> 
+          <a title="Edit" class="btn btn-primary btn-icon" href="/#/admin-merchants/deals/edit/${row._id}/${row.merchantId._id}/false"> 
           <i class="nb-edit"></i> 
           </div>`
         },
@@ -98,7 +112,7 @@ export class DealsListComponent {
  
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private service: DealsListService) {
     
-    this.service.getAllActiveDeal().subscribe( data => {
+    this.service.getAllGoliveDeal().subscribe( data => {
         if (data instanceof Array) {         
           this.source.load(data);
         }else{

@@ -14,9 +14,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
     
   },
   {
-    title: 'Deals',
+    title: 'Active Deals',
     icon: 'ion-ios-briefcase-outline',
-      
+    link: '/admin-merchants/deals/list',      
+  }, 
+  {
+    title: 'Request Deals',
+    icon: 'nb-compose',    
+    link: '/admin-merchants/deals/golive',  
   },  
   {
     title: 'Settings',
@@ -31,9 +36,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/admin-merchants/profile/changepwd/',
       }
     ],
-  },  
-  {
-    title: 'Add Money',
-    icon :'nb-plus-circled'
-  } 
+  }
+  
 ];
